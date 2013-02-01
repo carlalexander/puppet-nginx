@@ -1,0 +1,69 @@
+user <%= scope.lookupvar('nginx::config::daemon_user') %>;
+worker_processes <%= worker_processes %>;
+pid <%= scope.lookupvar('nginx::params::pid')%>;
+ 
+events {
+    worker_connections <%= worker_connections %>;
+    <% if scope.lookupvar('nginx::params::multi_accept') == 'on' %>multi_accept on;<% end %>
+    <% if scope.lookupvar('nginx::params::epoll') == 'on' %>use epoll;<% end %>
+}
+ 
+http {
+ 
+    # Let NGINX get the real client IP for its access logs
+    set_real_ip_from 127.0.0.1;
+    real_ip_header X-Forwarded-For;
+ 
+    # Basic Settings
+    sendfile <%= scope.lookupvar('nginx::params::sendfile')%>;;
+    tcp_nopush <%= scope.lookupvar('nginx::params::tcp_nopush')%>;
+    tcp_nodelay <%= scope.lookupvar('nginx::params::tcp_nodelay')%>;
+    keepalive_timeout <%= scope.lookupvar('nginx::params::keepalive_timeout')%>;
+
+    client_max_body_size 15m;
+    client_body_timeout 60;
+    client_header_timeout 60;
+    client_body_buffer_size  1K;
+    client_header_buffer_size 1k;
+    large_client_header_buffers 4 8k;
+    send_timeout keepalive_timeout <%= scope.lookupvar('nginx::params::send_timeout')%>;
+    reset_timedout_connection on;
+    types_hash_max_size 2048;
+    server_tokens off;
+ 
+    # server_names_hash_bucket_size 64;
+    # server_name_in_redirect off;
+ 
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+ 
+    # Logging Settings
+    # access_log <%= scope.lookupvar('nginx::params::logdir')%>/access.log;
+    error_log <%= scope.lookupvar('nginx::params::logdir')%>/error.log;
+ 
+    # Log Format
+    log_format main '$remote_addr - $remote_user [$time_local] '
+    '"$request" $status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" "$http_x_forwarded_for"';
+ 
+    # Gzip Settings
+    <% if scope.lookupvar('nginx::params::gzip') == 'on' %>
+    gzip on;
+    gzip_static on;
+    gzip_disable "msie6";
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_min_length 512;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_types text/css text/javascript text/xml text/plain text/x-component 
+    application/javascript application/x-javascript application/json 
+    application/xml  application/rss+xml font/truetype application/x-font-ttf 
+    font/opentype application/vnd.ms-fontobject image/svg+xml;
+    <% end %>
+ 
+    # Virtual Host Configs
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
