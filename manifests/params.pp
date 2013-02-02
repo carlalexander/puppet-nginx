@@ -31,4 +31,5 @@ class nginx::params {
   $gzip               = on
 
   $daemon_user = 'www-data'
+  $pid         = '/var/run/nginx.pid'
 }
