@@ -29,4 +29,6 @@ class nginx::params {
   $tcp_nodelay        = on
   $tcp_nopush         = on
   $gzip               = on
+
+  $daemon_user = 'www-data'
 }
