@@ -37,7 +37,7 @@ class nginx::config(
     ensure => directory,
   }
 
-  file { '${nginx::params::conf_dir}/sites-enabled/default':
+  file { "${nginx::params::conf_dir}/sites-enabled/default":
     ensure => absent,
   }
 
