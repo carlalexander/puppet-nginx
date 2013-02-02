@@ -25,7 +25,7 @@ class nginx::params {
   $epoll              = on
   $sendfile           = on
   $send_timeout       = 60
-  $keepalive_timeout  = 60
+  $keepalive_timeout  = 20
   $tcp_nodelay        = on
   $tcp_nopush         = on
   $gzip               = on

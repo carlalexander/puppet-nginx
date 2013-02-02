@@ -26,7 +26,7 @@ http {
     client_body_buffer_size  1K;
     client_header_buffer_size 1k;
     large_client_header_buffers 4 8k;
-    send_timeout keepalive_timeout <%= scope.lookupvar('nginx::params::send_timeout')%>;
+    send_timeout <%= scope.lookupvar('nginx::params::send_timeout')%>;
     reset_timedout_connection on;
     types_hash_max_size 2048;
     server_tokens off;
@@ -38,8 +38,8 @@ http {
     default_type application/octet-stream;
  
     # Logging Settings
-    # access_log <%= scope.lookupvar('nginx::params::logdir')%>/access.log;
-    error_log <%= scope.lookupvar('nginx::params::logdir')%>/error.log;
+    # access_log <%= scope.lookupvar('nginx::params::log_dir')%>/access.log;
+    error_log <%= scope.lookupvar('nginx::params::log_dir')%>/error.log;
  
     # Log Format
     log_format main '$remote_addr - $remote_user [$time_local] '
