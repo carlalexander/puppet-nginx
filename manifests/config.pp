@@ -14,8 +14,8 @@
 #
 # This class file is not called directly
 class nginx::config(
-  $worker_processes    = $nginx::params::nx_worker_processes,
-  $worker_connections  = $nginx::params::nx_worker_connections
+  $worker_processes    = $nginx::params::worker_processes,
+  $worker_connections  = $nginx::params::worker_connections
 ) inherits nginx::params {
   File {
     owner => 'root',
@@ -37,11 +37,11 @@ class nginx::config(
     ensure => directory,
   }
 
-  file { '${nginx::config::conf_dir}/sites-enabled/default':
+  file { '${nginx::params::conf_dir}/sites-enabled/default':
     ensure => absent,
   }
 
-  file { "${nginx::params::nx_conf_dir}/nginx.conf":
+  file { "${nginx::params::conf_dir}/nginx.conf":
     ensure  => file,
     content => template('nginx/nginx.conf.erb'),
   }
