@@ -23,7 +23,7 @@ class nginx::config(
     mode  => '0644',
   }
 
-  file { "${nginx::config::conf_dir}":
+  file { $nginx::config::conf_dir:
     ensure => directory,
   }
 
@@ -31,6 +31,7 @@ class nginx::config(
     ensure  => directory,
     purge   => true,
     recurse => true,
+    require => File[$nginx::config::conf_dir]
   }
   
   file { "${nginx::config::www_dir}":
@@ -44,6 +45,7 @@ class nginx::config(
   file { "${nginx::config::conf_dir}/nginx.conf":
     ensure  => file,
     content => template('nginx/nginx.conf.erb'),
+    require => File[$nginx::config::conf_dir]
   }
 
   file { $nginx::params::temp_dir:

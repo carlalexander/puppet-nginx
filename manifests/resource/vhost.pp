@@ -29,6 +29,6 @@ define nginx::resource::vhost (
     ensure  => file,
     content => template('nginx/vhost/vhost_footer.erb'),
     require => File["${nginx::params::temp_dir}/${server_name}-001"],
-    notify  => Service['nginx::service']
+    notify  => Class['nginx::service']
   }
 }
