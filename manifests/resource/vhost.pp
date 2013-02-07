@@ -21,7 +21,7 @@
 #   index       => ['index.php']
 # }
 define nginx::resource::vhost (
-  $server_name    = [$name],
+  $server_name    = $name,
   $listen_ip      = '*',
   $listen_port    = '80',
   $listen_options = undef,
