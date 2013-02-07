@@ -1,0 +1,15 @@
+server {
+  server_name <%= server_name %>;
+  listen <%= listen_ip %>:<%= listen_port %> <% if @listen_options %><%= listen_options %><% end %>;
+  
+  access_log <%= scope.lookupvar('nginx::params::log_dir')%>/<%= server_name %>_access.log;
+  error_log <%= scope.lookupvar('nginx::params::log_dir')%>/<%= server_name %>_error.log;
+
+  server_tokens off;
+
+  root <%= root =>;
+  index <% index.each do |i| %> <%= i %> <% end %>;
+
+  <% if @options -%><% options.each do |key,value| -%>
+  <%= key %> <%= value %>;
+  <% end -%><% end -%>

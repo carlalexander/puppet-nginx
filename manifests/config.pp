@@ -23,13 +23,13 @@ class nginx::config(
     mode  => '0644',
   }
 
-  file { "${nginx::params::conf_dir}":
+  file { "${nginx::config::conf_dir}":
     ensure => directory,
   }
 
-  file { "${nginx::params::conf_dir}/conf.d":
-    ensure => directory,
-    purge  => true,
+  file { "${nginx::config::conf_dir}/conf.d":
+    ensure  => directory,
+    purge   => true,
     recurse => true,
   }
   
@@ -37,12 +37,18 @@ class nginx::config(
     ensure => directory,
   }
 
-  file { "${nginx::params::conf_dir}/sites-enabled/default":
+  file { "${nginx::config::conf_dir}/sites-enabled/default":
     ensure => absent,
   }
 
-  file { "${nginx::params::conf_dir}/nginx.conf":
+  file { "${nginx::config::conf_dir}/nginx.conf":
     ensure  => file,
     content => template('nginx/nginx.conf.erb'),
+  }
+
+  file { $nginx::params::temp_dir:
+    ensure  => directory,
+    purge   => true,
+    recurse => true
   }
 }

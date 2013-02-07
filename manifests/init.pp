@@ -22,7 +22,6 @@ class nginx (
   $worker_processes   = $nginx::params::worker_processes,
   $worker_connections = $nginx::params::worker_connections
 ) inherits nginx::params {
-
   class { 'nginx::package':
     notify => Class['nginx::service'],
   }
