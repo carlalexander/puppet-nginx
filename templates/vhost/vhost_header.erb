@@ -10,6 +10,6 @@ server {
   root <%= root %>;
   index <% index.each do |i| %> <%= i %> <% end %>;
 
-  <% if @options -%><% options.each do |key,value| -%>
+<% if @options -%><% options.each do |key,value| -%>
   <%= key %> <%= value %>;
-  <% end -%><% end -%>
+<% end -%><% end -%>
