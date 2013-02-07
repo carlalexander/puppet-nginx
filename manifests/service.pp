@@ -18,7 +18,7 @@ class nginx::service {
     command     => "/bin/cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
     refreshonly => true,
     unless      => "/usr/bin/test ! -f ${nginx::params::temp_dir}/*",
-    subscribe   => File["${nginx::params::temp_dir}"],
+    subscribe   => File[$nginx::params::temp_dir],
   }
 
   service { "nginx":

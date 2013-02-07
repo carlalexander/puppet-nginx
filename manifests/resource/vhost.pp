@@ -22,11 +22,13 @@ define nginx::resource::vhost (
 
   file { "${nginx::params::temp_dir}/${server_name}-001":
     ensure  => file,
-    content => template('nginx/templates/vhost/vhost_header.erb')
+    content => template('nginx/vhost/vhost_header.erb')
   }
 
   file { "${nginx::params::temp_dir}/${server_name}-999":
     ensure  => file,
-    content => template('nginx/templates/vhost/vhost_footer.erb')
+    content => template('nginx/vhost/vhost_footer.erb'),
+    require => File["${nginx::params::temp_dir}/${server_name}-001"],
+    notify  => Service['nginx::service']
   }
 }

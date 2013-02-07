@@ -7,7 +7,7 @@ server {
 
   server_tokens off;
 
-  root <%= root =>;
+  root <%= root %>;
   index <% index.each do |i| %> <%= i %> <% end %>;
 
   <% if @options -%><% options.each do |key,value| -%>
