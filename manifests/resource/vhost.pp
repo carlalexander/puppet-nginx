@@ -20,12 +20,12 @@ define nginx::resource::vhost (
     fail('You must define a root directory')
   }
 
-  file { "${nginx::params::temp_dir}/${server_name}-001":
+  file { "${nginx::params::temp_dir}/${name}-001":
     ensure  => file,
     content => template('nginx/vhost/vhost_header.erb')
   }
 
-  file { "${nginx::params::temp_dir}/${server_name}-999":
+  file { "${nginx::params::temp_dir}/${name}-999":
     ensure  => file,
     content => template('nginx/vhost/vhost_footer.erb'),
     require => File["${nginx::params::temp_dir}/${server_name}-001"],
