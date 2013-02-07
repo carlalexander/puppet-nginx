@@ -13,8 +13,8 @@
 # Requires:
 #
 # Sample Usage:
-#  nginx::resource::location { 'test2.local-robot.txt':
-#    vhost    => 'test2.local',
+#  nginx::resource::location { 'test.local-robot.txt':
+#    vhost    => 'test.local',
 #    location => '= /robot.txt',
 #    options  => {
 #      'allow'         => 'all',
