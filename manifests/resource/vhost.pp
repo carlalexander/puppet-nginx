@@ -44,6 +44,18 @@ define nginx::resource::vhost (
     content => template('nginx/vhost/vhost_header.erb')
   }
 
+  # Deny access to hidden files by default
+  nginx::resource::location { "$name-hidden-files":
+    vhost    => $name,
+    location => '~ /\.',
+    options  => {
+      'deny'          => 'all',
+      'log_not_found' => 'off',
+      'access_log'    => 'off'
+    },
+    priority => 800
+  }
+
   file { "${nginx::params::temp_dir}/${name}-999":
     ensure  => file,
     content => template('nginx/vhost/vhost_footer.erb'),
