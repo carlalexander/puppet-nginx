@@ -48,8 +48,6 @@ define nginx::resource::location (
 
   file {"${nginx::params::temp_dir}/${vhost}-${priority}-${name}":
     ensure  => file,
-    content => template('nginx/vhost/location.erb'),
-    require => Nginx::Resource::Vhost[$vhost],
-    notify  => Class['nginx::service']
+    content => template('nginx/vhost/location.erb')
   }
 }

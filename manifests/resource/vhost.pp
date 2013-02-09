@@ -33,6 +33,7 @@ define nginx::resource::vhost (
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
+    notify  => Class['nginx::service']
   }
 
   if ($root == undef) {
@@ -58,8 +59,6 @@ define nginx::resource::vhost (
 
   file { "${nginx::params::temp_dir}/${name}-999":
     ensure  => file,
-    content => template('nginx/vhost/vhost_footer.erb'),
-    require => File["${nginx::params::temp_dir}/${name}-001"],
-    notify  => Class['nginx::service']
+    content => template('nginx/vhost/vhost_footer.erb')
   }
 }
