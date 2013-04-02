@@ -14,10 +14,14 @@
 #
 # This class file is not called directly
 class nginx::service {
+  Exec {
+    path => '/bin:/sbin:/usr/bin:/usr/sbin',
+  }
+
   exec { 'rebuild-nginx-vhosts':
-    command     => "/bin/cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
+    command     => "cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
     refreshonly => true,
-    unless      => "/usr/bin/test ! -f ${nginx::params::temp_dir}/*",
+    unless      => "test ! -f ${nginx::params::temp_dir}/*",
     subscribe   => File[$nginx::params::temp_dir],
   }
 
