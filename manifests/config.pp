@@ -30,6 +30,7 @@ class nginx::config(
   file { "${nginx::config::conf_dir}/conf.d":
     ensure  => directory,
     purge   => true,
+    ignore  => 'vhost_autogen.conf',
     recurse => true,
     require => File[$nginx::config::conf_dir]
   }
