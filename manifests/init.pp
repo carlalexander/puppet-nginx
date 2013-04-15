@@ -27,10 +27,10 @@ class nginx (
   }
 
   class { 'nginx::config':
-    worker_processes  => $worker_processes,
-    worker_connections  => $worker_connections,
-    require     => Class['nginx::package'],
-    notify      => Class['nginx::service'],
+    worker_processes   => $worker_processes,
+    worker_connections => $worker_connections,
+    require            => Class['nginx::package'],
+    notify             => Class['nginx::service'],
   }
 
   class { 'nginx::service': }
