@@ -18,11 +18,15 @@ class nginx::service {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
   }
 
+  file { "${nginx::config::conf_dir}/conf.d/vhost_autogen.conf":
+    ensure  => absent,
+    require => File[$nginx::params::temp_dir],
+  }
+
   exec { 'rebuild-nginx-vhosts':
-    command     => "cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
-    refreshonly => true,
-    unless      => "test ! -f ${nginx::params::temp_dir}/*",
-    subscribe   => File[$nginx::params::temp_dir],
+    command => "cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
+    unless  => "test ! -f ${nginx::params::temp_dir}/*",
+    require => File["${nginx::config::conf_dir}/conf.d/vhost_autogen.conf"]
   }
 
   service { "nginx":
