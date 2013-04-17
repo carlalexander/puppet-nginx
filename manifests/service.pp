@@ -24,9 +24,9 @@ class nginx::service {
   }
 
   exec { 'rebuild-nginx-vhosts':
-    command => "cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
-    unless  => "test ! -f ${nginx::params::temp_dir}/*",
-    require => File["${nginx::config::conf_dir}/conf.d/vhost_autogen.conf"]
+    command   => "cat ${nginx::params::temp_dir}/* > ${nginx::params::conf_dir}/conf.d/vhost_autogen.conf",
+    unless    => "test ! -f ${nginx::params::temp_dir}/*",
+    subscribe => File["${nginx::config::conf_dir}/conf.d/vhost_autogen.conf"]
   }
 
   service { "nginx":
