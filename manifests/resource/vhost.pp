@@ -11,6 +11,7 @@
 #   [*index*]          - Default index files for NGINX to read when traversing a directory
 #   [*options*]        - Expects an hash with the options for this vhost entry
 #   [*rewrite_www*]    - Adds a server directive and rewrite rule to rewrite www.domain.com to domain.com
+#   [*rewrite_http*]   - Adds a server directive and rewrite rule to rewrite http to https
 #
 # Actions:
 #
@@ -29,7 +30,8 @@ define nginx::resource::vhost (
   $root           = undef,
   $index          = ['index.html', 'index.htm'],
   $options        = undef,
-  $rewrite_www    = false
+  $rewrite_www    = false,
+  $rewrite_http   = false
 ) {
   File {
     owner  => 'root',
