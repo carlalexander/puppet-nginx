@@ -10,6 +10,7 @@
 #   [*root*]           - Specifies the location on disk for files to be read from.
 #   [*index*]          - Default index files for NGINX to read when traversing a directory
 #   [*options*]        - Expects an hash with the options for this vhost entry
+#   [*rewrite_www*]    - Adds a server directive and rewrite rule to rewrite www.domain.com to domain.com
 #
 # Actions:
 #
@@ -27,7 +28,8 @@ define nginx::resource::vhost (
   $listen_options = undef,
   $root           = undef,
   $index          = ['index.html', 'index.htm'],
-  $options        = undef
+  $options        = undef,
+  $rewrite_www    = false
 ) {
   File {
     owner  => 'root',
